@@ -12,18 +12,6 @@ def get_table(dynamodb=None):
         URL = os.environ['ENDPOINT_OVERRIDE']
         if URL:
             print('URL dynamoDB:'+URL)
-            print('aumento coverage')
-            print('aumento coverage')
-            print('logs de testing')
-            print('aumento coverage')
-            print('aumento coverage')
-            print('aumento coverage')
-            print('logs de testing')
-            print('aumento coverage')
-            print('logs de testing')
-            print('aumento coverage')
-            print('logs de testing')
-            print('aumento coverage')
             boto3.client = functools.partial(boto3.client, endpoint_url=URL)
             boto3.resource = functools.partial(boto3.resource,
                                                endpoint_url=URL)
