@@ -119,7 +119,6 @@ def delete_item(key, dynamodb=None):
 def create_todo_table(dynamodb):
     # For unit testing
     tableName = os.environ['DYNAMODB_TABLE']
-     # print messages
     print('Creating Table with name:' + tableName)
     print('logs de testing')
     table = dynamodb.create_table(
