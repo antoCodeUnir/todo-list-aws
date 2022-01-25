@@ -119,7 +119,9 @@ def delete_item(key, dynamodb=None):
 def create_todo_table(dynamodb):
     # For unit testing
     tableName = os.environ['DYNAMODB_TABLE']
+     # print messages
     print('Creating Table with name:' + tableName)
+    print('logs de testing')
     table = dynamodb.create_table(
         TableName=tableName,
         KeySchema=[
@@ -139,10 +141,9 @@ def create_todo_table(dynamodb):
             'WriteCapacityUnits': 1
         }
     )
-
     # Wait until the table exists.
     table.meta.client.get_waiter('table_exists').wait(TableName=tableName)
     if (table.table_status != 'ACTIVE'):
         raise AssertionError()
-
+    # Wait until the table exists.
     return table
