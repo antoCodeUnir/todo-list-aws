@@ -7,7 +7,7 @@ import functools
 from botocore.exceptions import ClientError
 
 
-def get_table(dynamodb=None):
+def get_table(dynamodb):
     if not dynamodb:
         URL = os.environ['ENDPOINT_OVERRIDE']
         if URL:
@@ -35,7 +35,7 @@ def get_item(key, dynamodb=None):
     else:
         print('Result getItem:'+str(result))
         if 'Item' in result:
-            return result['Item']
+            return  result['Item']
 
 
 def get_items(dynamodb=None):
@@ -64,7 +64,7 @@ def put_item(text, dynamodb=None):
             "statusCode": 200,
             "body": json.dumps(item)
         }
-
+        
     except ClientError as e:
         print(e.response['Error']['Message']) # pragma: no cover
     else:
@@ -76,7 +76,7 @@ def update_item(key, text, checked, dynamodb=None):
     timestamp = int(time.time() * 1000)
     # update the todo in the database
     try:
-        result = table.update_item(
+        result=table.update_item(
             Key={
                 'id': key
             },
@@ -119,7 +119,9 @@ def delete_item(key, dynamodb=None):
 def create_todo_table(dynamodb):
     # For unit testing
     tableName = os.environ['DYNAMODB_TABLE']
+     # print messages
     print('Creating Table with name:' + tableName)
+    print('logs de testing')
     table = dynamodb.create_table(
         TableName=tableName,
         KeySchema=[
@@ -139,10 +141,9 @@ def create_todo_table(dynamodb):
             'WriteCapacityUnits': 1
         }
     )
-
     # Wait until the table exists.
     table.meta.client.get_waiter('table_exists').wait(TableName=tableName)
     if (table.table_status != 'ACTIVE'):
         raise AssertionError()
-
+    # Wait until the table exists.
     return table
