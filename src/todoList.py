@@ -7,7 +7,7 @@ import functools
 from botocore.exceptions import ClientError
 
 
-def get_table(dynamodb=None):
+def get_table(dynamodb):
     if not dynamodb:
         URL = os.environ['ENDPOINT_OVERRIDE']
         if URL:
@@ -31,11 +31,11 @@ def get_item(key, dynamodb=None):
         )
 
     except ClientError as e:
-        print(e.response['Error']['Message'])
+        print(e.response['Error']['Message']) # pragma: no cover
     else:
         print('Result getItem:'+str(result))
         if 'Item' in result:
-            return result['Item']
+            return  result['Item']
 
 
 def get_items(dynamodb=None):
@@ -64,9 +64,9 @@ def put_item(text, dynamodb=None):
             "statusCode": 200,
             "body": json.dumps(item)
         }
-
+        
     except ClientError as e:
-        print(e.response['Error']['Message'])
+        print(e.response['Error']['Message']) # pragma: no cover
     else:
         return response
 
@@ -76,7 +76,7 @@ def update_item(key, text, checked, dynamodb=None):
     timestamp = int(time.time() * 1000)
     # update the todo in the database
     try:
-        result = table.update_item(
+        result=table.update_item(
             Key={
                 'id': key
             },
@@ -95,7 +95,7 @@ def update_item(key, text, checked, dynamodb=None):
         )
 
     except ClientError as e:
-        print(e.response['Error']['Message'])
+        print(e.response['Error']['Message']) # pragma: no cover
     else:
         return result['Attributes']
 
@@ -111,7 +111,7 @@ def delete_item(key, dynamodb=None):
         )
 
     except ClientError as e:
-        print(e.response['Error']['Message'])
+        print(e.response['Error']['Message']) # pragma: no cover
     else:
         return
 
