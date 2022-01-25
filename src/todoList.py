@@ -35,7 +35,7 @@ def get_item(key, dynamodb=None):
     else:
         print('Result getItem:'+str(result))
         if 'Item' in result:
-            return  result['Item']
+            return result['Item']
 
 
 def get_items(dynamodb=None):
@@ -76,7 +76,7 @@ def update_item(key, text, checked, dynamodb=None):
     timestamp = int(time.time() * 1000)
     # update the todo in the database
     try:
-        result=table.update_item(
+        result = table.update_item(
             Key={
                 'id': key
             },
